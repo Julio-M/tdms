@@ -1,0 +1,10 @@
+[tool.poetry.scripts]
+tdms = "tdms.main:main"
+
+[tool.poetry]
+name = "tdms"
+version = "0.1.0"
+description = "A simple table mapping tool for the command line to be used with AWS DMS"
+authors = ["Xhulio Mihali"]
+readme = "README.md"
+license = "MIT"

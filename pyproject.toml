@@ -1,3 +1,7 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools", "wheel"]
+
 [tool.poetry.scripts]
 tdms = "tdms.main:main"
 

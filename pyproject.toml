@@ -7,7 +7,7 @@ tdms = "tdms.main:main"
 
 [tool.poetry]
 name = "tdms"
-version = "v0.0.42-alpha"
+version = "v0.0.43-alpha"
 description = "A simple table mapping tool for the command line to be used with AWS DMS"
 authors = ["Xhulio Mihali"]
 readme = "README.md"

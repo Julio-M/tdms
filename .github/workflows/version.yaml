@@ -91,12 +91,12 @@ jobs:
       - name: Get version of the tag
         run: |
           echo "TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+
       - name: Print the tag
         run: echo $TAG
 
       - name: Patch the version using poetry
         run: |
-          source $HOME/.poetry/env
           poetry version $TAG
           echo "VERSION=$(poetry version | awk '{print $2}')" >> $GITHUB_ENV
       
@@ -140,7 +140,6 @@ jobs:
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TEST_TOKEN }}
         run: |
-          source $HOME/.poetry/env
           poetry config repositories.test-tdms https://test.pypi.org/legacy/
           poetry publish --repository test-tdms --build
 

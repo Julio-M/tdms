@@ -1,6 +1,6 @@
 
 # Badges
-[![CI](https://github.com/Julio-M/tdms/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/Julio-M/tdms/actions/workflows/ci.yaml)
+[![test-coverage](https://github.com/Julio-M/tdms/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/Julio-M/tdms/actions/workflows/test-coverage.yaml)
 
 # DMS - Table mapping generator
 

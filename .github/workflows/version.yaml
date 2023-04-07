@@ -73,6 +73,7 @@ jobs:
         run: |
           git fetch --all
           git pull --all
+
       - name: Git config
         run: |
           git config --global user.email "github-actions@example.com"
@@ -126,6 +127,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Update release branch
+        run: |
+          git fetch --all
+          git pull --all
+
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -143,7 +149,3 @@ jobs:
         run: |
           poetry config repositories.test-tdms https://test.pypi.org/legacy/
           poetry publish --repository test-tdms --build --username __token__ --password $POETRY_PYPI_TOKEN_PYPI
-
-
-
-

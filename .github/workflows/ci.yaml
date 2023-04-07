@@ -23,7 +23,7 @@ jobs:
       # Generate coverage report and compare it to the previous one
       - name: Generate coverage report
         run: |
-          pytest --cov=tdms --cov-report=lcov
+          pytest --cov=tdms --cov-report=xml --cov-report=html --cov-report=lcov --cov-report=term-missing --cov-fail-under=90
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -31,7 +31,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage/reports/
           env_vars: OS,PYTHON
-          file: ./coverage.lcov
+          files: ./coverage.lcov, ./coverage.xml, ./coverage.html
           flags: unittests
           name: tdms
           fail_ci_if_error: true

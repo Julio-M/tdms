@@ -1,3 +1,7 @@
+
+# Badges
+[![CI](https://github.com/Julio-M/tdms/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/Julio-M/tdms/actions/workflows/ci.yaml)
+
 # DMS - Table mapping generator
 
 This is a tool to generate table mapping files for the DMS (Data Migration Service)

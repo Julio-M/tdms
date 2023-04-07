@@ -96,7 +96,7 @@ class Mapping:
         file_lines = file.read()
         list_of_lines = file_lines.split("\n")
         list_of_lines_after_quotes = [w.strip('\"') for w in list_of_lines]
-        return list_of_lines_after_quotes if '"' in list_of_lines[0] else list_of_lines
+        return list_of_lines_after_quotes
 
     # General rules template
     def general_rules(self,i,random_id):
@@ -126,6 +126,7 @@ class Mapping:
                 "rule-action":"add-prefix",
                 "value":self.prefix_value
             }
+           
     
     # Loop through the list of table names, create dictionary, and add it to the list
     def createJSON(self):

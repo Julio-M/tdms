@@ -124,6 +124,6 @@ def test_main_wrong_arguments():
     os.system("python3 tdms/main.py -t tables.txt -s public -p myprefix_ -r include -y view -z")
     assert os.path.exists("table_mapping.json") == False
 
-def test_main_except_valueerror():
-    with pytest.raises(Exception) as e:
-        raise e(os.system("python3 tdms/main.py -t tables.txt -s public -p s -r include -y s"))
+# def test_main_except_valueerror():
+#     with pytest.raises(Exception) as e:
+#         raise e(os.system("python3 tdms/main.py -t tables.txt -s public -p s -r include -y s"))

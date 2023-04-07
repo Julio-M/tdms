@@ -1,0 +1,105 @@
+name: Version
+
+on:
+  push:
+    branches: [ release ]
+  release:
+    types: [ published ]
+
+jobs:
+    # Prepare the environment for the build and push
+  prepare:
+    name: 'Prepare 🧂'
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Set ref name
+        id: ref-name
+        run: |
+          SEMVER_REGEX="^(v?)(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
+          if [[ ${{ github.ref_name }} == "main" ]]; then
+            echo "REF_NAME=main" >> $GITHUB_ENV
+          elif [[ ${{ github.ref_name }} == "dev" ]]; then
+            echo "REF_NAME=dev" >> $GITHUB_ENV
+          elif [[ ${{ github.ref_name }} == "release" ]]; then
+            echo "REF_NAME=release" >> $GITHUB_ENV
+          elif [[ ${{ github.ref_name }} =~ $SEMVER_REGEX ]]; then
+            echo "REF_NAME=release" >> $GITHUB_ENV
+          else
+            echo -e "\033[31m Ref ${{ github.ref_name }} does not match! Aborting version!"
+            exit 1
+          fi
+      
+       # Checkout repository
+      - name: Checkout repository
+        if: ${{ env.REF_NAME == 'release' && github.event_name == 'release' }}
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check if tag exists
+        if: ${{ env.REF_NAME == 'release' && github.event_name == 'release' }}
+        run: |
+          onReleaseBranch=false
+          for tag in $(git tag); do
+            if [[ $tag == ${{ github.event.release.tag_name }} ]]; then
+              onReleaseBranch=true
+            fi
+          done
+          if [[ $onReleaseBranch == false ]]; then
+            echo -e "\033[31m Tag ${{ github.event.release.tag_name }} does not exist on release branch! Aborting version update!"
+            exit 1
+          fi
+
+    outputs:
+      ref-name: ${{ env.REF_NAME }}
+
+# Update version
+  version:
+    name: 'Update version 📦'
+    needs: prepare
+    runs-on: ubuntu-latest
+    if: ${{ needs.prepare.outputs.ref-name == 'release' && github.event_name == 'release' }}
+    steps:
+      - name: Checkout repository branch release
+        uses: actions/checkout@v3
+        with:
+          ref: release
+          fetch-depth: 0
+
+      - name: Update release branch
+        run: |
+          git fetch --all
+          git pull --all
+      - name: Git config
+        run: |
+          git config --global user.email "github-actions@example.com"
+          git config --global user.name "github-actions"
+
+      - name: Get version of the tag
+        run: |
+          echo "TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      - name: Print the tag
+        run: echo $TAG
+
+      - name: Patch the version
+        run: |
+          sed -i "s/version = \".*\"/version = \"$TAG\"/g" pyproject.toml
+      
+      - name: Print package.json
+        run: cat pyproject.toml
+
+      - name: Print the version
+        run: echo $VERSION
+      
+      - name: Push version
+        run: |
+          git add package.json
+          git commit -m "Update version"
+          git push
+        
+
+
+
+

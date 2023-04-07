@@ -1,0 +1,38 @@
+name: Test and coverage
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Tests and coverage for python fastapi project
+  test-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      # Generate coverage report and compare it to the previous one
+      - name: Generate coverage report
+        run: |
+          pytest --cov=tdms --cov-report=xml --cov-report=html --cov-report=lcov --cov-report=term-missing --cov-fail-under=90
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage/reports/
+          env_vars: OS,PYTHON
+          files: ./coverage.lcov, ./coverage.xml, ./coverage.html
+          flags: unittests
+          name: tdms
+          fail_ci_if_error: true

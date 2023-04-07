@@ -139,7 +139,7 @@ jobs:
 
       - name: Build and publish alpha to Test PyPI
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TEST_TOKEN }}
+          POETRY_PYPI_TOKEN_PYPI: pypi-${{ secrets.PYPI_TEST_TOKEN }}
         run: |
           poetry config repositories.test-tdms https://test.pypi.org/legacy/
           poetry publish --repository test-tdms --build

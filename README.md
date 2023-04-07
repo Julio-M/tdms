@@ -2,6 +2,15 @@
 # Badges
 [![Test and coverage](https://github.com/Julio-M/tdms/actions/workflows/test-coverage.yaml/badge.svg?branch=main)](https://github.com/Julio-M/tdms/actions/workflows/test-coverage.yaml)
 
+# Table of Contents
+- [DMS - Table mapping generator](#dms---table-mapping-generator)
+  - [Usage](#usage)
+  - [Example](#example)
+- [Options](#options)
+- [Installation](#installation)
+- [Test](#test)
+- [Coverage](#coverage)
+
 # DMS - Table mapping generator
 
 This is a tool to generate table mapping files for the DMS (Data Migration Service)
@@ -141,6 +150,17 @@ Table mapping file generated:
   ]
 }
 ```
+
+# Options
+
+| Option | Description | Example |
+| --- | --- | --- |
+| `-t` | The file that contains the list of tables to be mapped | `tables.txt` |
+| `-s` | The schema that the tables are in | `public` |
+| `-p` | The prefix value to be added to the table names | `myprefix_` |
+| `-r` | The rule action to be used | `include` |
+| `-y` | The table types to be used | `view` |
+
 
 # Test
 

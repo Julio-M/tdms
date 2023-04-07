@@ -39,3 +39,7 @@ options:
   -y TABLE_TYPES,       --table_types TABLE_TYPES
                         The table types to be used
 ```
+
+# Test
+
+To run the tests, type `pytest` in the root of the project.

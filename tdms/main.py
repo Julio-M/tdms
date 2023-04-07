@@ -17,6 +17,7 @@ class Color:
         self.BOLD = '\033[1m'
         self.END = '\033[0m'
         self.YELLOW = '\033[93m'
+        self.RED = '\033[91m'
 
     # Return the text in bold
     def bold(self):
@@ -24,6 +25,9 @@ class Color:
 
     def yellow(self):
         return f"{self.YELLOW}{self.text}{self.END}"
+    
+    def red(self):
+        return f"{self.RED}{self.text}{self.END}"
 
 # Make uuid json serializable
 class UUIDEncoder(json.JSONEncoder):
@@ -47,9 +51,6 @@ class Mapping:
 
     # Constructor
     def __init__(self,table_list_input,schema_list_input,rule_action,table_types, prefix_value=None):
-        
-        # rule_action should only be allowed to be one of the following values ["include","exclude","explicit"]
-        # table_types should only be allowed to be one of the following values ["table","view","al"]
 
         # Validate the values of the parameters
 
@@ -60,6 +61,7 @@ class Mapping:
             raise ValueError("The table type must be one of the following values: table, view or all")
 
         self.table_list_input = table_list_input
+        self.table_path = table_list_input
         self.schema_list_input = schema_list_input
         self.prefix_value = prefix_value
         self.rule_action = rule_action
@@ -70,10 +72,8 @@ class Mapping:
     def printTable(self):
         print(Color("Values used: \n").bold())
 
-        table_path = self.table_list_input
-
-        if "/" in table_path:
-            self.table_path = table_path.split("/")[-1]
+        if "/" in self.table_path:
+            self.table_path = self.table_path.split("/")[-1]
 
         if self.prefix_value == None:
             self.prefix_value = "None"
@@ -87,6 +87,7 @@ class Mapping:
 
         print(self.table_path.ljust(20),self.schema_list_input.ljust(20),self.prefix_value.ljust(20),self.rule_action.ljust(20),self.table_types.ljust(20))
         print(' ' * len(header))
+        return True if header != None else False
 
 
     # Function that reads table list file
@@ -128,7 +129,7 @@ class Mapping:
     
     # Loop through the list of table names, create dictionary, and add it to the list
     def createJSON(self):
-        printTable = self.printTable()
+        self.printTable()
         # Ask user if they want to continue
         for i in range(0,len(self.readTableList())):
             random_id = random.randint(0,1000)
@@ -163,10 +164,12 @@ def main():
     args = parser.parse_args()
 
     # Create an instance of the Mapping class
-    mapping = Mapping(args.table_list_input,args.schema_list_input,args.rule_action,args.table_types,args.prefix_value)
-
-    # Call the createJSON function
-    mapping.createJSON()
+    try:
+        mapping = Mapping(args.table_list_input,args.schema_list_input,args.rule_action,args.table_types,args.prefix_value)
+        # Call the createJSON function
+        mapping.createJSON()
+    except ValueError as e:
+        print(Color("Error: ").red() + Color(e).bold())
 
 if __name__ == "__main__":
     main()

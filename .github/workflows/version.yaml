@@ -60,6 +60,7 @@ jobs:
     name: 'Update version 📦'
     needs: prepare
     runs-on: ubuntu-latest
+    permissions: write-all
     if: ${{ needs.prepare.outputs.ref-name == 'release' && github.event_name == 'release' }}
     steps:
       - name: Checkout repository branch release

@@ -1,0 +1,39 @@
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  publish:
+    name: 'Publish 🚀'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0     
+
+      - name: Update release branch
+        run: |
+          git fetch --all
+          git pull --all
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8      
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install
+
+      - name: Build and publish to PyPI
+        env:
+          POETRY_PYPI_TOKEN_PYPI: pypi-${{ secrets.PYPI_TOKEN }}
+        run: |
+          poetry config repositories.tdms https://upload.pypi.org/legacy/
+          poetry publish --repository tdms --build --username __token__ --password $POETRY_PYPI_TOKEN_PYPI
+

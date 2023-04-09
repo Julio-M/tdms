@@ -153,13 +153,13 @@ Table mapping file generated:
 
 # Options
 
-| Option | Description | Example |
-| --- | --- | --- |
-| `-t` | The file that contains the list of tables to be mapped | `tables.txt` |
-| `-s` | The schema that the tables are in | `public` |
-| `-p` | The prefix value to be added to the table names | `myprefix_` |
-| `-r` | The rule action to be used | `include` |
-| `-y` | The table types to be used | `view` |
+| Option | Description | Example | Required |
+| --- | --- | --- | --- |
+| `-t` | The file that contains the list of tables to be mapped | `tables.txt` | Yes |
+| `-s` | The schema that the tables are in | `public` | Yes |
+| `-p` | The prefix value to be added to the table names | `myprefix_` | No |
+| `-r` | The rule action to be used | `include` | Yes |
+| `-y` | The table types to be used | `view` | Yes |
 
 
 # Test

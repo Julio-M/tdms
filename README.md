@@ -10,6 +10,7 @@
 - [Installation](#installation)
 - [Test](#test)
 - [Coverage](#coverage)
+- [License](#license)
 
 # DMS - Table mapping generator
 

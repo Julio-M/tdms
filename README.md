@@ -176,3 +176,7 @@ To run the `coverage`, in the root of the project, run:
 ```bash
 make coverage
 ```
+
+# License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
